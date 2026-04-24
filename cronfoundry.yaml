@@ -1,0 +1,20 @@
+version: 1
+skills:
+  - path: skills/smoke
+    schedules:
+      - name: every-5
+        cron: "*/5 * * * *"
+        timezone: UTC
+        overlap_policy: skip
+        timeout_sec: 300
+        provider: anthropic
+        model: claude-haiku-4-5-20251001
+        destinations:
+          - github-issue:
+              repo: gambtho/cronfoundry-smoke-skill
+              title: "smoke — {{ run.date }}"
+              labels: [smoke]
+        writeback:
+          enabled: true
+          path: memory.md
+          mode: append
